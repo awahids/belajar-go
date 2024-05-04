@@ -3,11 +3,9 @@ package v1
 import (
 	"net/http"
 
+	bookRoutes "github.com/awahids/belajar-gin/api/v1/bookReoutes"
 	"github.com/awahids/belajar-gin/internal/configs"
-	"github.com/awahids/belajar-gin/internal/domain/delivery/handler/bookHandler"
 	"github.com/awahids/belajar-gin/internal/domain/infrastructure/db"
-	"github.com/awahids/belajar-gin/internal/domain/infrastructure/repositories/bookRepo"
-	"github.com/awahids/belajar-gin/internal/domain/services/bookService"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 
@@ -23,10 +21,6 @@ func SetupRouters() *gin.Engine {
 
 	validate := validator.New()
 
-	bookRepos := bookRepo.NewBookRepository(db)
-	bookService := bookService.NewBookService(bookRepos, validate)
-	bookHandler := bookHandler.NewBookHandler(bookService)
-
 	r.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	v1 := r.Group("/api/v1")
@@ -38,14 +32,7 @@ func SetupRouters() *gin.Engine {
 			})
 		}
 
-		v1.GET("/books", bookHandler.GetBooks)
-		book := v1.Group("/book")
-		{
-			book.POST("", bookHandler.CreateBook)
-			book.PUT("", bookHandler.UpdateBook)
-			book.GET("/:id", bookHandler.GetBook)
-			book.DELETE("/:id", bookHandler.DeleteBook)
-		}
+		bookRoutes.BookRouter(v1, validate, db)
 	}
 
 	return r
