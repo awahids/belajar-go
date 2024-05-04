@@ -1,4 +1,4 @@
-package db
+package database
 
 import (
 	"github.com/awahids/belajar-gin/internal/domain/models"

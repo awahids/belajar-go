@@ -3,8 +3,8 @@ package bookRepo
 import (
 	"errors"
 
-	"github.com/awahids/belajar-gin/internal/domain/infrastructure/repositories/repoInterface"
 	"github.com/awahids/belajar-gin/internal/domain/models"
+	"github.com/awahids/belajar-gin/internal/domain/repositories/repoInterface"
 	"github.com/awahids/belajar-gin/pkg/helpers"
 	"gorm.io/gorm"
 )

@@ -3,15 +3,16 @@ package v1
 import (
 	"net/http"
 
-	bookRoutes "github.com/awahids/belajar-gin/api/v1/bookReoutes"
+	"github.com/awahids/belajar-gin/internal/delivery/router/bookRouter"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
+	"gorm.io/gorm"
 
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
-func SetupRouters() *gin.Engine {
+func SetupRouters(db *gorm.DB) *gin.Engine {
 	r := gin.Default()
 
 	validate := validator.New()
@@ -27,7 +28,7 @@ func SetupRouters() *gin.Engine {
 			})
 		}
 
-		bookRoutes.BookRouter(v1, validate)
+		bookRouter.BookRouter(v1, validate, db)
 	}
 
 	return r

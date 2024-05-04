@@ -1,11 +1,12 @@
-package db
+package database
 
 import (
 	"fmt"
 	"log"
 	"time"
 
-	"github.com/awahids/belajar-gin/internal/configs"
+	"github.com/awahids/belajar-gin/configs"
+	"github.com/awahids/belajar-gin/internal/domain/models"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -33,5 +34,6 @@ func NewDB() (*gorm.DB, error) {
 	sqlDB.SetConnMaxLifetime(time.Hour)
 
 	log.Println("Successfully connected to the database")
+	db.AutoMigrate(&models.Book{})
 	return db, nil
 }

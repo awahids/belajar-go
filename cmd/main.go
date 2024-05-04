@@ -4,16 +4,14 @@ import (
 	"net/http"
 	"time"
 
-	v1 "github.com/awahids/belajar-gin/api/v1"
-	"github.com/awahids/belajar-gin/internal/domain/infrastructure/db"
+	v1 "github.com/awahids/belajar-gin/internal/delivery/router/api/v1"
+	"github.com/awahids/belajar-gin/internal/infrastructure/database"
 	"github.com/awahids/belajar-gin/pkg/helpers"
 )
 
 func main() {
-	db.NewDB()
-	db.AutoMigrate()
-
-	r := v1.SetupRouters()
+	db, _ := database.NewDB()
+	r := v1.SetupRouters(db)
 
 	server := &http.Server{
 		Addr:           ":8181",

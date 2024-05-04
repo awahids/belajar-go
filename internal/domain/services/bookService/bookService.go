@@ -1,8 +1,8 @@
 package bookService
 
 import (
-	"github.com/awahids/belajar-gin/internal/domain/infrastructure/repositories/repoInterface"
 	"github.com/awahids/belajar-gin/internal/domain/models"
+	"github.com/awahids/belajar-gin/internal/domain/repositories/repoInterface"
 	serviceinterface "github.com/awahids/belajar-gin/internal/domain/services/serviceInterface"
 	"github.com/awahids/belajar-gin/pkg/helpers"
 	"github.com/awahids/belajar-gin/pkg/helpers/request/bookReq"
