@@ -4,8 +4,6 @@ import (
 	"net/http"
 
 	bookRoutes "github.com/awahids/belajar-gin/api/v1/bookReoutes"
-	"github.com/awahids/belajar-gin/internal/configs"
-	"github.com/awahids/belajar-gin/internal/domain/infrastructure/db"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 
@@ -15,9 +13,6 @@ import (
 
 func SetupRouters() *gin.Engine {
 	r := gin.Default()
-
-	cfg, _ := configs.LoadConfig()
-	db, _ := db.NewDB(cfg)
 
 	validate := validator.New()
 
@@ -32,7 +27,7 @@ func SetupRouters() *gin.Engine {
 			})
 		}
 
-		bookRoutes.BookRouter(v1, validate, db)
+		bookRoutes.BookRouter(v1, validate)
 	}
 
 	return r
