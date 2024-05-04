@@ -6,9 +6,9 @@ import (
 )
 
 type BookService interface {
-	CreateBook(book bookReq.CreateBookReq)
-	UpdateBook(book bookReq.UpdateBookReq)
-	GetBookById(uuid string) bookRes.BookRes
+	CreateBook(book bookReq.CreateBookReq) (bookRes bookRes.BookRes, err error)
+	UpdateBook(book bookReq.UpdateBookReq) bookRes.BookRes
+	GetBookById(uuid string) (book bookRes.BookRes, err error)
 	DeleteBook(uuid string) error
-	GetAllBooks() []bookRes.BookRes
+	GetAllBooks() (books []bookRes.BookRes, err error)
 }

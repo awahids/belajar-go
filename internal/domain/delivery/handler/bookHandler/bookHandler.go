@@ -21,7 +21,8 @@ func NewBookHandler(bookInterface serviceInterface.BookService) *BookHandler {
 }
 
 func (h *BookHandler) GetBooks(ctx *gin.Context) {
-	books := h.bookService.GetAllBooks()
+	books, err := h.bookService.GetAllBooks()
+	helpers.ErrorPanic(err)
 
 	webResponse := response.Response{
 		Code:   http.StatusOK,
@@ -36,7 +37,8 @@ func (h *BookHandler) GetBooks(ctx *gin.Context) {
 func (h *BookHandler) GetBook(ctx *gin.Context) {
 	bookUuid := ctx.Param("uuid")
 
-	bookRes := h.bookService.GetBookById(bookUuid)
+	bookRes, err := h.bookService.GetBookById(bookUuid)
+	helpers.ErrorPanic(err)
 
 	webResponse := response.Response{
 		Code:   http.StatusOK,
@@ -52,15 +54,16 @@ func (h *BookHandler) CreateBook(ctx *gin.Context) {
 	err := ctx.ShouldBindJSON(&createBookReq)
 	helpers.ErrorPanic(err)
 
-	h.bookService.CreateBook(createBookReq)
+	createdBook, err := h.bookService.CreateBook(createBookReq)
+	helpers.ErrorPanic(err)
 
 	webResponse := response.Response{
-		Code:   http.StatusOK,
+		Code:   http.StatusCreated,
 		Status: "Ok",
-		Data:   nil,
+		Data:   createdBook,
 	}
 	ctx.Header("Content-Type", "application/json")
-	ctx.JSON(http.StatusOK, webResponse)
+	ctx.JSON(http.StatusCreated, webResponse)
 }
 
 func (h *BookHandler) UpdateBook(ctx *gin.Context) {
@@ -68,15 +71,15 @@ func (h *BookHandler) UpdateBook(ctx *gin.Context) {
 	err := ctx.ShouldBindJSON(&updateBookReq)
 	helpers.ErrorPanic(err)
 
-	bookUuid := ctx.Param("uuid")
+	bookUUID := ctx.Param("uuid")
+	updateBookReq.UUID = bookUUID
 
-	updateBookReq.UUID = bookUuid
-	h.bookService.UpdateBook(updateBookReq)
+	updatedBook := h.bookService.UpdateBook(updateBookReq)
 
 	webResponse := response.Response{
 		Code:   http.StatusOK,
 		Status: "Ok",
-		Data:   nil,
+		Data:   updatedBook,
 	}
 	ctx.Header("Content-Type", "application/json")
 	ctx.JSON(http.StatusOK, webResponse)

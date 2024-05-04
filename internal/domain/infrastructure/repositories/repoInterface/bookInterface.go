@@ -5,9 +5,9 @@ import (
 )
 
 type BookInterface interface {
-	Create(book models.Book)
-	Update(book models.Book)
+	Create(book models.Book) (bookCreate models.Book, err error)
+	Update(book models.Book) (updatedBook models.Book)
 	GetByID(uuid string) (book models.Book, err error)
-	GetAll() []models.Book
+	GetAll() (books []models.Book, err error)
 	Delete(uuid string) error
 }
