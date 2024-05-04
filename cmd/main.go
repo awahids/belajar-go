@@ -5,10 +5,14 @@ import (
 	"time"
 
 	v1 "github.com/awahids/belajar-gin/api/v1"
+	"github.com/awahids/belajar-gin/internal/domain/infrastructure/db"
 	"github.com/awahids/belajar-gin/pkg/helpers"
 )
 
 func main() {
+	db.NewDB()
+	db.AutoMigrate()
+
 	r := v1.SetupRouters()
 
 	server := &http.Server{

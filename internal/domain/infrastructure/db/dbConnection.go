@@ -6,12 +6,13 @@ import (
 	"time"
 
 	"github.com/awahids/belajar-gin/internal/configs"
-	"github.com/awahids/belajar-gin/internal/domain/models"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
-func NewDB(cfg *configs.Config) (*gorm.DB, error) {
+func NewDB() (*gorm.DB, error) {
+	cfg, _ := configs.LoadConfig()
+
 	dsn := fmt.Sprintf(
 		"host=%s user=%s password=%s dbname=%s port=%s sslmode=disable",
 		cfg.DBHost, cfg.DBUser, cfg.DBPassword, cfg.DBName, cfg.DBPort,
@@ -32,6 +33,5 @@ func NewDB(cfg *configs.Config) (*gorm.DB, error) {
 	sqlDB.SetConnMaxLifetime(time.Hour)
 
 	log.Println("Successfully connected to the database")
-	db.AutoMigrate(&models.User{}, &models.Book{})
 	return db, nil
 }
