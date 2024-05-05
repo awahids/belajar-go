@@ -5,17 +5,15 @@ import (
 	"os"
 	"strings"
 
-	"github.com/gin-gonic/gin"
-
 	"github.com/dgrijalva/jwt-go"
+	"github.com/gin-gonic/gin"
 )
 
-var (
-	jwtSecret = []byte(os.Getenv("JWT_SECRET"))
-)
+var jwtSecret = []byte(os.Getenv("JWT_SECRET"))
 
 type CustomClaims struct {
-	UserID uint `json:"user_id"`
+	UserID uint   `json:"user_id"`
+	Email  string `json:"email"`
 	jwt.StandardClaims
 }
 
@@ -50,6 +48,7 @@ func JWTAuthMiddleware() gin.HandlerFunc {
 			c.JSON(http.StatusUnauthorized, gin.H{
 				"code":  http.StatusUnauthorized,
 				"error": "Unauthorized",
+				"msg":   err.Error(),
 			})
 			c.Abort()
 			return
@@ -65,6 +64,7 @@ func JWTAuthMiddleware() gin.HandlerFunc {
 		}
 
 		c.Set("user_id", claims.UserID)
+		c.Set("email", claims.Email)
 
 		c.Next()
 	}
