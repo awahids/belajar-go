@@ -3,7 +3,7 @@ package router
 import (
 	"net/http"
 
-	"github.com/awahids/belajar-gin/internal/middlewares"
+	"github.com/awahids/belajar-go/internal/middlewares"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 	"gorm.io/gorm"

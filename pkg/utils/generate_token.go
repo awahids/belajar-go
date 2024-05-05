@@ -3,7 +3,7 @@ package utils
 import (
 	"os"
 
-	"github.com/awahids/belajar-gin/internal/domain/models"
+	"github.com/awahids/belajar-go/internal/domain/models"
 	"github.com/dgrijalva/jwt-go"
 )
 

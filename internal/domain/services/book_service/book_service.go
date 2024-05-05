@@ -1,11 +1,11 @@
 package book_service
 
 import (
-	"github.com/awahids/belajar-gin/internal/delivery/data/request"
-	"github.com/awahids/belajar-gin/internal/delivery/data/response"
-	"github.com/awahids/belajar-gin/internal/domain/models"
-	"github.com/awahids/belajar-gin/internal/domain/repositories/book_repository"
-	"github.com/awahids/belajar-gin/pkg/helpers"
+	"github.com/awahids/belajar-go/internal/delivery/data/request"
+	"github.com/awahids/belajar-go/internal/delivery/data/response"
+	"github.com/awahids/belajar-go/internal/domain/models"
+	"github.com/awahids/belajar-go/internal/domain/repositories/book_repository"
+	"github.com/awahids/belajar-go/pkg/helpers"
 	"github.com/go-playground/validator/v10"
 )
 

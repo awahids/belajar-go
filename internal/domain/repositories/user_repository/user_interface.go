@@ -1,6 +1,6 @@
 package user_repository
 
-import "github.com/awahids/belajar-gin/internal/domain/models"
+import "github.com/awahids/belajar-go/internal/domain/models"
 
 type UserInterface interface {
 	Create(user *models.User) (userCreate *models.User, err error)

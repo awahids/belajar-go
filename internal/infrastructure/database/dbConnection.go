@@ -5,8 +5,8 @@ import (
 	"log"
 	"time"
 
-	"github.com/awahids/belajar-gin/configs"
-	"github.com/awahids/belajar-gin/pkg/helpers"
+	"github.com/awahids/belajar-go/configs"
+	"github.com/awahids/belajar-go/pkg/helpers"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )

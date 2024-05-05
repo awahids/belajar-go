@@ -3,9 +3,9 @@ package auth_handler
 import (
 	"net/http"
 
-	"github.com/awahids/belajar-gin/internal/delivery/data/request"
-	"github.com/awahids/belajar-gin/internal/domain/services/auth_service"
-	"github.com/awahids/belajar-gin/pkg/utils"
+	"github.com/awahids/belajar-go/internal/delivery/data/request"
+	"github.com/awahids/belajar-go/internal/domain/services/auth_service"
+	"github.com/awahids/belajar-go/pkg/utils"
 	"github.com/gin-gonic/gin"
 )
 
