@@ -4,9 +4,9 @@ import (
 	"net/http"
 	"time"
 
-	v1 "github.com/awahids/belajar-gin/internal/delivery/router"
-	"github.com/awahids/belajar-gin/internal/infrastructure/database"
-	"github.com/awahids/belajar-gin/pkg/helpers"
+	v1 "github.com/awahids/belajar-go/internal/delivery/router"
+	"github.com/awahids/belajar-go/internal/infrastructure/database"
+	"github.com/awahids/belajar-go/pkg/helpers"
 )
 
 func main() {

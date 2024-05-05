@@ -3,7 +3,7 @@ package configs
 import (
 	"os"
 
-	"github.com/awahids/belajar-gin/pkg/helpers"
+	"github.com/awahids/belajar-go/pkg/helpers"
 	"github.com/joho/godotenv"
 )
 

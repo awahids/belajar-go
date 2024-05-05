@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/awahids/belajar-gin/internal/delivery/data/response"
+	"github.com/awahids/belajar-go/internal/delivery/data/response"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )

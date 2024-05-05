@@ -3,10 +3,10 @@ package handlers
 import (
 	"net/http"
 
-	"github.com/awahids/belajar-gin/internal/delivery/data/request"
-	"github.com/awahids/belajar-gin/internal/delivery/data/response"
-	"github.com/awahids/belajar-gin/internal/domain/services/book_service"
-	"github.com/awahids/belajar-gin/pkg/helpers"
+	"github.com/awahids/belajar-go/internal/delivery/data/request"
+	"github.com/awahids/belajar-go/internal/delivery/data/response"
+	"github.com/awahids/belajar-go/internal/domain/services/book_service"
+	"github.com/awahids/belajar-go/pkg/helpers"
 	"github.com/gin-gonic/gin"
 )
 

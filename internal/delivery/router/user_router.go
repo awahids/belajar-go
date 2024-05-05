@@ -1,9 +1,9 @@
 package router
 
 import (
-	"github.com/awahids/belajar-gin/internal/delivery/handlers"
-	"github.com/awahids/belajar-gin/internal/domain/repositories/user_repository"
-	"github.com/awahids/belajar-gin/internal/domain/services/user_service"
+	"github.com/awahids/belajar-go/internal/delivery/handlers"
+	"github.com/awahids/belajar-go/internal/domain/repositories/user_repository"
+	"github.com/awahids/belajar-go/internal/domain/services/user_service"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 	"gorm.io/gorm"

@@ -1,4 +1,4 @@
-module github.com/awahids/belajar-gin
+module github.com/awahids/belajar-go
 
 go 1.22.2
 

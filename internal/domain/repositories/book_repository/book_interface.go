@@ -1,7 +1,7 @@
 package book_repository
 
 import (
-	"github.com/awahids/belajar-gin/internal/domain/models"
+	"github.com/awahids/belajar-go/internal/domain/models"
 )
 
 type BookInterface interface {

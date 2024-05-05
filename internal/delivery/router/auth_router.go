@@ -1,9 +1,9 @@
 package router
 
 import (
-	"github.com/awahids/belajar-gin/internal/delivery/handlers/auth_handler"
-	"github.com/awahids/belajar-gin/internal/domain/repositories/user_repository"
-	"github.com/awahids/belajar-gin/internal/domain/services/auth_service"
+	"github.com/awahids/belajar-go/internal/delivery/handlers/auth_handler"
+	"github.com/awahids/belajar-go/internal/domain/repositories/user_repository"
+	"github.com/awahids/belajar-go/internal/domain/services/auth_service"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )

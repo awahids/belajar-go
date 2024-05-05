@@ -1,8 +1,8 @@
 package user_service
 
 import (
-	"github.com/awahids/belajar-gin/internal/delivery/data/request"
-	"github.com/awahids/belajar-gin/internal/delivery/data/response"
+	"github.com/awahids/belajar-go/internal/delivery/data/request"
+	"github.com/awahids/belajar-go/internal/delivery/data/response"
 )
 
 type UserInterface interface {
