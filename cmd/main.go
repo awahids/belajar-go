@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"time"
 
-	v1 "github.com/awahids/belajar-gin/internal/delivery/router/api/v1"
+	v1 "github.com/awahids/belajar-gin/internal/delivery/router"
 	"github.com/awahids/belajar-gin/internal/infrastructure/database"
 	"github.com/awahids/belajar-gin/pkg/helpers"
 )
