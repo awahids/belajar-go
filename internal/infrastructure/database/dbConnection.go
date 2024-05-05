@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/awahids/belajar-gin/configs"
-	"github.com/awahids/belajar-gin/internal/domain/models"
+	"github.com/awahids/belajar-gin/pkg/helpers"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -20,20 +20,16 @@ func NewDB() (*gorm.DB, error) {
 	)
 
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
-	if err != nil {
-		return nil, err
-	}
+	helpers.ErrorPanic(err)
 
 	sqlDB, err := db.DB()
-	if err != nil {
-		return nil, err
-	}
+	helpers.ErrorPanic(err)
 
 	sqlDB.SetMaxIdleConns(10)
 	sqlDB.SetMaxOpenConns(100)
 	sqlDB.SetConnMaxLifetime(time.Hour)
 
 	log.Println("Successfully connected to the database")
-	db.AutoMigrate(&models.Book{})
+	MigrateAllModels(db)
 	return db, nil
 }
