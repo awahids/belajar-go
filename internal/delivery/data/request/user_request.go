@@ -4,7 +4,7 @@ type CreateUserReq struct {
 	Username string `json:"username" validate:"required"`
 	Email    string `json:"email" validate:"required,email"`
 	Password string `json:"password" validate:"required,min=8"`
-	// RoleId   string `json:"role_id" validate:"required"`
+	RoleUuid string `json:"role_uuid" validate:"required"`
 }
 
 type UpdateUserReq struct {
@@ -12,7 +12,7 @@ type UpdateUserReq struct {
 	Username string `json:"username" validate:"required"`
 	Email    string `json:"email" validate:"required,email"`
 	Password string `json:"password" validate:"required,min=8"`
-	// RoleId   string `json:"role_id" validate:"required"`
+	RoleUuid string `json:"role_uuid" validate:"required"`
 }
 
 type LoginReq struct {
