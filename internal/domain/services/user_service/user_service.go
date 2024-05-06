@@ -24,6 +24,13 @@ func NewUserService(userInterface user_repository.UserInterface, validate *valid
 }
 
 func (s *UserService) CreateUser(userReq *request.CreateUserReq) (userRes *response.UserResponse, err error) {
+	// var role models.Role
+
+	// role, err = s.repo.get(userReq.RoleUuid)
+	// if err != nil {
+	// 	return userRes, err
+	// }
+
 	validator := s.Validate.Struct(userReq)
 	helpers.ErrorValidator(validator)
 

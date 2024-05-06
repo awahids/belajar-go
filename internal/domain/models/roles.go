@@ -1,6 +1,10 @@
 package models
 
-type Role struct {
-	ID   uint     `json:"id"`
-	Name RoleType `json:"name"`
+import "gorm.io/gorm"
+
+type Roles struct {
+	Base
+	Title RoleType `json:"title" gorm:"unique"`
+	Value string   `json:"value" gorm:"unique"`
+	gorm.Model
 }
