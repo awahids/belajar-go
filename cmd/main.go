@@ -6,12 +6,14 @@ import (
 
 	v1 "github.com/awahids/belajar-go/internal/delivery/router"
 	"github.com/awahids/belajar-go/internal/infrastructure/database"
+	"github.com/awahids/belajar-go/internal/infrastructure/database/seeds"
 	"github.com/awahids/belajar-go/pkg/helpers"
 )
 
 func main() {
 	db, _ := database.NewDB()
 	r := v1.SetupRouters(db)
+	seeds.Seeders(db)
 
 	server := &http.Server{
 		Addr:           ":8181",
