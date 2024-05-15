@@ -1,13 +1,9 @@
-Here's a comprehensive `README.md` file for your Go project. This documentation covers the use of Gin Gonic, GORM, and PostgreSQL, along with instructions for running seeders and using `CompileDaemon`.
-
-```markdown
 # Belajar Go Project
 
 This project is a Go-based web application utilizing Gin Gonic for the web framework, GORM for ORM, and PostgreSQL as the database. It includes features such as user and role management with JWT-based authentication and more.
 
 ## Project Structure
-
-```
+```markdown
 belajar-go/
 │
 ├── cmd/
@@ -78,7 +74,7 @@ belajar-go/
 
 ### Prerequisites
 
-- Go 1.18+
+- Go 1.22+
 - PostgreSQL
 - `CompileDaemon` for live reloading during development
 
@@ -111,11 +107,6 @@ Update the `.env` file with your database credentials and other configurations.
    createdb belajar_go
    ```
 
-2. Run the database migrations:
-   ```bash
-   go run internal/infrastructure/database/migrations.go
-   ```
-
 ### Running the Application
 
 You can use `CompileDaemon` to automatically rebuild and restart the application when you make changes to the source code.
@@ -129,14 +120,6 @@ You can use `CompileDaemon` to automatically rebuild and restart the application
    ```bash
    CompileDaemon --build="go build cmd/main.go" --command=./main
    ```
-
-### Running Seeders
-
-Seeders are scripts to populate the database with initial data. To run the seeders:
-
-```bash
-go run internal/infrastructure/database/seeder.go
-```
 
 ### API Documentation
 
@@ -163,16 +146,6 @@ go run internal/infrastructure/database/seeder.go
 - **go.mod**: Go module file.
 - **go.sum**: Go module dependencies file.
 
-## Contributing
+<!-- ## Contributing
 
-Contributions are welcome! Please fork this repository and submit a pull request for any changes.
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-```
-
-### Notes:
-
-1. Replace `your_project_path` with the actual import paths in your project.
-2. Customize the `README.md` content based on your actual application features and endpoints.
+Contributions are welcome! Please fork this repository and submit a pull request for any changes. -->
