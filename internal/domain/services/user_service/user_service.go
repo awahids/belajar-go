@@ -6,6 +6,7 @@ import (
 	"github.com/awahids/belajar-go/internal/delivery/data/request"
 	"github.com/awahids/belajar-go/internal/delivery/data/response"
 	"github.com/awahids/belajar-go/internal/domain/models"
+	"github.com/awahids/belajar-go/internal/domain/repositories/role_repository"
 	"github.com/awahids/belajar-go/internal/domain/repositories/user_repository"
 	"github.com/awahids/belajar-go/pkg/helpers"
 	"github.com/go-playground/validator/v10"
@@ -13,36 +14,42 @@ import (
 
 type UserService struct {
 	repo     user_repository.UserInterface
+	roleRepo role_repository.RoleInterface
 	Validate *validator.Validate
 }
 
-func NewUserService(userInterface user_repository.UserInterface, validate *validator.Validate) UserInterface {
+func NewUserService(repo user_repository.UserInterface, roleRepo role_repository.RoleInterface, validate *validator.Validate) *UserService {
 	return &UserService{
-		repo:     userInterface,
+		repo:     repo,
+		roleRepo: roleRepo,
 		Validate: validate,
 	}
 }
 
 func (s *UserService) CreateUser(userReq *request.CreateUserReq) (userRes *response.UserResponse, err error) {
-	// var role models.Role
-
-	// role, err = s.repo.get(userReq.RoleUuid)
-	// if err != nil {
-	// 	return userRes, err
-	// }
-
 	validator := s.Validate.Struct(userReq)
-	helpers.ErrorValidator(validator)
-
-	userModel := models.User{}
+	if validator != nil {
+		return nil, helpers.ErrorValidator(validator)
+	}
 
 	password, err := helpers.HashPassword(userReq.Password)
 	helpers.ErrorPanic(err)
-	userModel.Password = password
+
+	role, err := s.roleRepo.GetByUuid(userReq.Role.RoleUuid)
+	if err != nil {
+		return nil, err
+	}
+
+	userModel := models.User{
+		Username: userReq.Username,
+		Email:    userReq.Email,
+		Password: password,
+		Role:     *role,
+	}
 
 	createdUser, err := s.repo.Create(&userModel)
 	if err != nil {
-		return userRes, err
+		return nil, err
 	}
 
 	userRes = &response.UserResponse{
@@ -51,6 +58,12 @@ func (s *UserService) CreateUser(userReq *request.CreateUserReq) (userRes *respo
 		Username: createdUser.Username,
 		Email:    createdUser.Email,
 		Password: password,
+		Role: response.RoleResponse{
+			Id:    int(role.Id),
+			UUID:  role.UUID,
+			Title: string(role.Title),
+			Value: role.Value,
+		},
 	}
 
 	return userRes, nil
@@ -71,7 +84,12 @@ func (s *UserService) GetUserById(uuid string) (user response.UserResponse, err 
 		Username: userModel.Username,
 		Email:    userModel.Email,
 		Password: userModel.Password,
-		// RoleId:   userModel.RoleId,
+		Role: response.RoleResponse{
+			Id:    int(userModel.Role.Id),
+			UUID:  userModel.Role.UUID,
+			Title: string(userModel.Role.Title),
+			Value: userModel.Role.Value,
+		},
 	}
 	return userRes, nil
 }
@@ -87,7 +105,12 @@ func (s *UserService) GetAllUsers() (users []response.UserResponse, err error) {
 			Username: userModel.Username,
 			Email:    userModel.Email,
 			Password: userModel.Password,
-			// RoleId:   userModel.RoleId,
+			Role: response.RoleResponse{
+				Id:    int(userModel.Role.Id),
+				UUID:  userModel.Role.UUID,
+				Title: string(userModel.Role.Title),
+				Value: userModel.Role.Value,
+			},
 		}
 		users = append(users, user)
 	}
@@ -111,7 +134,12 @@ func (s *UserService) UpdateUser(userReq request.UpdateUserReq) (userRes respons
 		Username: updatedUser.Username,
 		Email:    updatedUser.Email,
 		Password: updatedUser.Password,
-		// RoleId:   updatedUser.RoleId,
+		Role: response.RoleResponse{
+			Id:    int(updatedUser.Role.Id),
+			UUID:  updatedUser.Role.UUID,
+			Title: string(updatedUser.Role.Title),
+			Value: updatedUser.Role.Value,
+		},
 	}
 	return userRes, nil
 }

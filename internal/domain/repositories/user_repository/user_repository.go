@@ -14,20 +14,18 @@ func NewUserRepository(db *gorm.DB) UserInterface {
 	return &UserRepository{db: db}
 }
 
-func (r *UserRepository) Create(user *models.User) (userCreate *models.User, err error) {
-	err = r.db.Create(user).Error
-
+func (r *UserRepository) Create(user *models.User) (*models.User, error) {
+	err := r.db.Create(user).Error
 	if err != nil {
 		return nil, err
 	}
-
-	return userCreate, nil
+	return user, nil
 }
 
 func (r *UserRepository) GetUser(uuid string) (*models.User, error) {
 	var user models.User
 
-	if err := r.db.Where("uuid = ?", uuid).First(&user).Error; err != nil {
+	if err := r.db.Preload("Role").Where("uuid = ?", uuid).First(&user).Error; err != nil {
 		if err == gorm.ErrRecordNotFound {
 			return nil, helpers.ErrRecordNotFound
 		}
@@ -55,7 +53,7 @@ func (r *UserRepository) GetUserByEmail(email string) (user *models.User, err er
 }
 
 func (r *UserRepository) GetUsers() (users []models.User, err error) {
-	err = r.db.Find(&users).Error
+	err = r.db.Preload("Role").Find(&users).Error
 	helpers.ErrorPanic(err)
 
 	return users, nil

@@ -10,7 +10,7 @@ type User struct {
 	Username string `json:"username" gorm:"unique"`
 	Password string `json:"password"`
 	RoleId   uint   `json:"role_id"`
-	Role     Roles  `gorm:"foreignKey:RoleId"`
+	Role     Roles  `gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
 	gorm.Model
 }
 

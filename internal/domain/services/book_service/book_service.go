@@ -54,24 +54,24 @@ func (s *BookService) GetBookById(uuid string) (*response.BookResponse, error) {
 	return bookRes, nil
 }
 
-func (s *BookService) CreateBook(book *request.CreateBookReq) (bookcreate *response.BookResponse, err error) {
+func (s *BookService) CreateBook(book *request.CreateBookReq) (bookCreate *response.BookResponse, err error) {
 	validator := s.Validate.Struct(book)
 	helpers.ErrorPanic(validator)
 
 	bookModel := models.Book{}
 	createdBook, err := s.repo.Create(&bookModel)
 	if err != nil {
-		return bookcreate, err
+		return bookCreate, err
 	}
 
-	bookcreate = &response.BookResponse{
+	bookCreate = &response.BookResponse{
 		Id:     int(createdBook.Id),
 		UUID:   createdBook.UUID,
 		Title:  createdBook.Title,
 		Author: createdBook.Author,
 		Year:   createdBook.Year,
 	}
-	return bookcreate, nil
+	return bookCreate, nil
 }
 
 func (s *BookService) UpdateBook(bookReq *request.UpdateBookReq) (*response.BookResponse, error) {
