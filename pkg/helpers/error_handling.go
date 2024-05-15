@@ -2,6 +2,7 @@ package helpers
 
 import (
 	"errors"
+	"fmt"
 	"net/http"
 	"strings"
 
@@ -9,6 +10,35 @@ import (
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )
+
+func ErrorPanic(err error) {
+	if err != nil {
+		panic(err)
+	}
+}
+
+// func ErrorResponse(err error, ctx *gin.Context) {
+// 	ctx.JSON(http.StatusInternalServerError, gin.H{
+// 		"error": err.Error(),
+// 	})
+// }
+
+func ErrorValidator(err error) error {
+	if err != nil {
+		return fmt.Errorf("validation error: %v", err)
+	}
+	return nil
+}
+
+func JSONResponse(ctx *gin.Context, data interface{}) {
+	isCreate := ctx.Request.Method == http.MethodPost
+	statusCode := http.StatusOK
+	if isCreate {
+		statusCode = http.StatusCreated
+	}
+
+	ctx.JSON(statusCode, data)
+}
 
 var ErrRecordNotFound = gorm.ErrRecordNotFound
 

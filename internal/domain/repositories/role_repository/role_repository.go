@@ -14,31 +14,40 @@ func NewRoleRepository(Db *gorm.DB) RoleInterface {
 	return &RoleRepository{Db: Db}
 }
 
-func (r *RoleRepository) GetAll() ([]*models.Roles, error) {
-	var roles []*models.Roles
-	results := r.Db.Find(&roles)
-	helpers.ErrorPanic(results.Error)
-	return roles, nil
-}
+// func (r *RoleRepository) GetAll() ([]*models.Roles, error) {
+// 	var roles []*models.Roles
+// 	results := r.Db.Find(&roles)
+// 	helpers.ErrorPanic(results.Error)
+// 	return roles, nil
+// }
 
-func (r *RoleRepository) GetById(uuid string) (*models.Roles, error) {
-	var role *models.Roles
+func (r *RoleRepository) GetByUuid(uuid string) (*models.Roles, error) {
+	var role models.Roles
 	if err := r.Db.Where("uuid = ?", uuid).First(&role).Error; err != nil {
 		if err == gorm.ErrRecordNotFound {
 			return nil, helpers.ErrRecordNotFound
 		}
 		return nil, err
 	}
-	return role, nil
+	return &role, nil
 }
 
-func (r *RoleRepository) GetByValue(value string) (*models.Roles, error) {
-	var role *models.Roles
-	if err := r.Db.Where("value = ?", value).First(&role).Error; err != nil {
-		if err == gorm.ErrRecordNotFound {
-			return nil, helpers.ErrRecordNotFound
-		}
-		return nil, err
-	}
-	return role, nil
-}
+// func (r *RoleRepository) FindRoleByUUID(roleUUID string) (*models.Role, error) {
+//     var role models.Role
+//     err := r.Db.Where("uuid = ?", roleUUID).First(&role).Error
+//     if err != nil {
+//         return nil, err
+//     }
+//     return &role, nil
+// }
+
+// func (r *RoleRepository) GetByValue(value string) (*models.Roles, error) {
+// 	var role *models.Roles
+// 	if err := r.Db.Where("value = ?", value).First(&role).Error; err != nil {
+// 		if err == gorm.ErrRecordNotFound {
+// 			return nil, helpers.ErrRecordNotFound
+// 		}
+// 		return nil, err
+// 	}
+// 	return role, nil
+// }
