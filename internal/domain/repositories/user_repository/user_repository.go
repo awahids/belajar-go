@@ -46,8 +46,12 @@ func (r *UserRepository) GetByUsername(username string) (user *models.User, err 
 func (r *UserRepository) GetUserByEmail(email string) (user *models.User, err error) {
 	user = &models.User{}
 
-	err = r.db.Where("email = ?", email).First(user).Error
-	helpers.ErrorPanic(err)
+	if err := r.db.Preload("Role").Where("email = ?", email).First(&user).Error; err != nil {
+		if err == gorm.ErrRecordNotFound {
+			return nil, helpers.ErrRecordNotFound
+		}
+		return nil, err
+	}
 
 	return user, nil
 }
