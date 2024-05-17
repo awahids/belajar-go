@@ -30,7 +30,8 @@ func SetupRouters(db *gorm.DB) *gin.Engine {
 
 		AuthRouter(v1, db)
 
-		v1.Use(middlewares.JWTAuthMiddleware())
+		// v1.Use(middlewares.JWTAuthMiddleware())
+		v1.Use(middlewares.JWTAuth())
 		{
 			UserRouter(v1, validate, db)
 			BookRouter(v1, validate, db)
