@@ -5,7 +5,7 @@ import (
 
 	"github.com/awahids/belajar-go/internal/delivery/data/request"
 	"github.com/awahids/belajar-go/internal/domain/services/auth_service"
-	"github.com/awahids/belajar-go/pkg/utils"
+	"github.com/awahids/belajar-go/internal/middlewares"
 	"github.com/gin-gonic/gin"
 )
 
@@ -26,12 +26,13 @@ func (h *AuthHandler) Login(ctx *gin.Context) {
 
 	user, err := h.authService.Login(loginReq.Email, loginReq.Password)
 	if err != nil {
-		ctx.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid credentials"})
+		ctx.JSON(http.StatusUnauthorized, gin.H{
+			"error": "Invalid credentials",
+		})
 		return
 	}
 
-	// Generate JWT token
-	token, err := utils.GenerateToken(user)
+	token, err := middlewares.GenerateJWT(user)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to generate token"})
 		return

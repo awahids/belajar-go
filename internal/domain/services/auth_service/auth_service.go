@@ -22,7 +22,6 @@ func (s *AuthService) Login(email, password string) (*models.User, error) {
 		return nil, err
 	}
 
-	// Verifikasi password
 	if !helpers.CheckPasswordHash(password, user.Password) {
 		return nil, errors.New("incorrect password")
 	}
