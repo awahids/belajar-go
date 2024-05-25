@@ -1,7 +1,7 @@
 package book_service
 
 import (
-	"github.com/awahids/belajar-go/internal/delivery/data/request"
+	"github.com/awahids/belajar-go/internal/delivery/data/dtos"
 	"github.com/awahids/belajar-go/internal/delivery/data/response"
 	"github.com/awahids/belajar-go/internal/domain/models"
 	"github.com/awahids/belajar-go/internal/domain/repositories/book_repository"
@@ -54,7 +54,7 @@ func (s *BookService) GetBookById(uuid string) (*response.BookResponse, error) {
 	return bookRes, nil
 }
 
-func (s *BookService) CreateBook(book *request.CreateBookReq) (bookCreate *response.BookResponse, err error) {
+func (s *BookService) CreateBook(book *dtos.CreateBookReq) (bookCreate *response.BookResponse, err error) {
 	validator := s.Validate.Struct(book)
 	helpers.ErrorPanic(validator)
 
@@ -74,13 +74,10 @@ func (s *BookService) CreateBook(book *request.CreateBookReq) (bookCreate *respo
 	return bookCreate, nil
 }
 
-func (s *BookService) UpdateBook(bookReq *request.UpdateBookReq) (*response.BookResponse, error) {
+func (s *BookService) UpdateBook(bookReq *dtos.UpdateBookReq) (*response.BookResponse, error) {
 	book, err := s.repo.GetByID(bookReq.UUID)
 	helpers.ErrorPanic(err)
 
-	// book.Title = request.Title
-	// book.Author = request.Author
-	// book.Year = request.Year
 	s.repo.Update(book)
 
 	bookRes := response.BookResponse{

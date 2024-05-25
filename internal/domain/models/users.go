@@ -1,11 +1,12 @@
 package models
 
 import (
+	"github.com/awahids/belajar-go/common"
 	"gorm.io/gorm"
 )
 
 type User struct {
-	Base
+	common.Base
 	Email    string `json:"email" gorm:"unique"`
 	Username string `json:"username" gorm:"unique"`
 	Password string `json:"password"`

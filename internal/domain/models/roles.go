@@ -1,9 +1,12 @@
 package models
 
-import "gorm.io/gorm"
+import (
+	"github.com/awahids/belajar-go/common"
+	"gorm.io/gorm"
+)
 
 type Roles struct {
-	Base
+	common.Base
 	Title RoleType `json:"title" gorm:"unique"`
 	Value string   `json:"value" gorm:"unique"`
 	gorm.Model

@@ -3,7 +3,7 @@ package handlers
 import (
 	"net/http"
 
-	"github.com/awahids/belajar-go/internal/delivery/data/request"
+	"github.com/awahids/belajar-go/internal/delivery/data/dtos"
 	"github.com/awahids/belajar-go/internal/delivery/data/response"
 	"github.com/awahids/belajar-go/internal/domain/services/user_service"
 	"github.com/awahids/belajar-go/pkg/helpers"
@@ -21,7 +21,7 @@ func NewUserHandler(userInterface user_service.UserInterface) *UserHandler {
 }
 
 func (h *UserHandler) CreateUser(ctx *gin.Context) {
-	createUserReq := request.CreateUserReq{}
+	createUserReq := dtos.CreateUserReq{}
 	err := ctx.ShouldBindJSON(&createUserReq)
 	helpers.ErrorPanic(err)
 
@@ -32,9 +32,9 @@ func (h *UserHandler) CreateUser(ctx *gin.Context) {
 	}
 
 	webResponse := response.Response{
-		Code:   http.StatusCreated,
-		Status: "Ok",
-		Data:   createdUser,
+		Code:    http.StatusCreated,
+		Message: "Success Created",
+		Data:    createdUser,
 	}
 	helpers.JSONResponse(ctx, webResponse)
 }
@@ -49,9 +49,9 @@ func (h *UserHandler) GetUser(ctx *gin.Context) {
 	}
 
 	webResponse := response.Response{
-		Code:   http.StatusOK,
-		Status: "Ok",
-		Data:   userRes,
+		Code:    http.StatusOK,
+		Message: "Data Found",
+		Data:    userRes,
 	}
 	helpers.JSONResponse(ctx, webResponse)
 }
@@ -61,28 +61,28 @@ func (h *UserHandler) GetAllUsers(ctx *gin.Context) {
 	helpers.ErrorPanic(err)
 
 	webResponse := response.Response{
-		Code:   http.StatusOK,
-		Status: "Ok",
-		Data:   users,
+		Code:    http.StatusOK,
+		Message: "Data Found",
+		Data:    users,
 	}
 	helpers.JSONResponse(ctx, webResponse)
 }
 
 func (h *UserHandler) UpdateUser(ctx *gin.Context) {
-	updateUserReq := request.UpdateUserReq{}
+	updateUserReq := dtos.UpdateUserReq{}
 	err := ctx.ShouldBindJSON(&updateUserReq)
 	helpers.ErrorPanic(err)
 
 	userUUID := ctx.Param("uuid")
 	updateUserReq.UUID = userUUID
 
-	updatedUser, err := h.userService.UpdateUser(updateUserReq)
+	updatedUser, err := h.userService.UpdateUser(&updateUserReq)
 	helpers.ErrorPanic(err)
 
 	webResponse := response.Response{
-		Code:   http.StatusOK,
-		Status: "Ok",
-		Data:   updatedUser,
+		Code:    http.StatusOK,
+		Message: "Success Updated",
+		Data:    updatedUser,
 	}
 	helpers.JSONResponse(ctx, webResponse)
 }
@@ -94,9 +94,9 @@ func (h *UserHandler) DeleteUser(ctx *gin.Context) {
 	helpers.ErrorPanic(err)
 
 	webResponse := response.Response{
-		Code:   http.StatusOK,
-		Status: "Ok",
-		Data:   nil,
+		Code:    http.StatusOK,
+		Message: "Success Deleted",
+		Data:    nil,
 	}
 	helpers.JSONResponse(ctx, webResponse)
 }

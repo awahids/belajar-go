@@ -3,7 +3,7 @@ package auth_handler
 import (
 	"net/http"
 
-	"github.com/awahids/belajar-go/internal/delivery/data/request"
+	"github.com/awahids/belajar-go/internal/delivery/data/dtos"
 	"github.com/awahids/belajar-go/internal/domain/services/auth_service"
 	"github.com/awahids/belajar-go/internal/middlewares"
 	"github.com/gin-gonic/gin"
@@ -18,13 +18,13 @@ func NewAuthHandler(authService *auth_service.AuthService) *AuthHandler {
 }
 
 func (h *AuthHandler) Login(ctx *gin.Context) {
-	var loginReq request.LoginReq
+	var loginReq dtos.LoginReq
 	if err := ctx.ShouldBindJSON(&loginReq); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	user, err := h.authService.Login(loginReq.Email, loginReq.Password)
+	user, err := h.authService.Login(&loginReq)
 	if err != nil {
 		ctx.JSON(http.StatusUnauthorized, gin.H{
 			"error": "Invalid credentials",

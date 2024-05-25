@@ -1,4 +1,4 @@
-package request
+package dtos
 
 type CreateBookReq struct {
 	Title  string `validate:"required" json:"title"`
