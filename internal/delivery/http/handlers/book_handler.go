@@ -3,7 +3,7 @@ package handlers
 import (
 	"net/http"
 
-	"github.com/awahids/belajar-go/internal/delivery/data/request"
+	"github.com/awahids/belajar-go/internal/delivery/data/dtos"
 	"github.com/awahids/belajar-go/internal/delivery/data/response"
 	"github.com/awahids/belajar-go/internal/domain/services/book_service"
 	"github.com/awahids/belajar-go/pkg/helpers"
@@ -25,14 +25,12 @@ func (h *BookHandler) GetBooks(ctx *gin.Context) {
 	helpers.ErrorPanic(err)
 
 	webResponse := response.Response{
-		Code:   http.StatusOK,
-		Status: "Ok",
-		Data:   books,
+		Code:    http.StatusOK,
+		Message: "Data Found",
+		Data:    books,
 	}
-	// ctx.Header("Content-Type", "application/json")
-	// ctx.JSON(http.StatusOK, webResponse)
-	helpers.JSONResponse(ctx, webResponse)
 
+	helpers.JSONResponse(ctx, webResponse)
 }
 
 func (h *BookHandler) GetBook(ctx *gin.Context) {
@@ -42,17 +40,16 @@ func (h *BookHandler) GetBook(ctx *gin.Context) {
 	helpers.ErrorPanic(err)
 
 	webResponse := response.Response{
-		Code:   http.StatusOK,
-		Status: "Ok",
-		Data:   bookRes,
+		Code:    http.StatusOK,
+		Message: "Data Found",
+		Data:    bookRes,
 	}
-	// ctx.Header("Content-Type", "application/json")
-	// ctx.JSON(http.StatusOK, webResponse)
+
 	helpers.JSONResponse(ctx, webResponse)
 }
 
 func (h *BookHandler) CreateBook(ctx *gin.Context) {
-	createBookReq := request.CreateBookReq{}
+	createBookReq := dtos.CreateBookReq{}
 	err := ctx.ShouldBindJSON(&createBookReq)
 	helpers.ErrorPanic(err)
 
@@ -60,17 +57,16 @@ func (h *BookHandler) CreateBook(ctx *gin.Context) {
 	helpers.ErrorPanic(err)
 
 	webResponse := response.Response{
-		Code:   http.StatusCreated,
-		Status: "Ok",
-		Data:   createdBook,
+		Code:    http.StatusCreated,
+		Message: "Success Created",
+		Data:    createdBook,
 	}
-	// ctx.Header("Content-Type", "application/json")
-	// ctx.JSON(http.StatusCreated, webResponse)
+
 	helpers.JSONResponse(ctx, webResponse)
 }
 
 func (h *BookHandler) UpdateBook(ctx *gin.Context) {
-	updateBookReq := request.UpdateBookReq{}
+	updateBookReq := dtos.UpdateBookReq{}
 	err := ctx.ShouldBindJSON(&updateBookReq)
 	helpers.ErrorPanic(err)
 
@@ -81,12 +77,11 @@ func (h *BookHandler) UpdateBook(ctx *gin.Context) {
 	helpers.ErrorPanic(err)
 
 	webResponse := response.Response{
-		Code:   http.StatusOK,
-		Status: "Ok",
-		Data:   updatedBook,
+		Code:    http.StatusOK,
+		Message: "Success Updated",
+		Data:    updatedBook,
 	}
-	// ctx.Header("Content-Type", "application/json")
-	// ctx.JSON(http.StatusOK, webResponse)
+
 	helpers.JSONResponse(ctx, webResponse)
 }
 
@@ -96,11 +91,10 @@ func (h *BookHandler) DeleteBook(ctx *gin.Context) {
 	h.bookService.DeleteBook(bookUuid)
 
 	webResponse := response.Response{
-		Code:   http.StatusOK,
-		Status: "Ok",
-		Data:   nil,
+		Code:    http.StatusOK,
+		Message: "Success Deleted",
+		Data:    nil,
 	}
-	// ctx.Header("Content-Type", "application/json")
-	// ctx.JSON(http.StatusOK, webResponse)
+
 	helpers.JSONResponse(ctx, webResponse)
 }

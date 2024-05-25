@@ -3,7 +3,6 @@ package router
 import (
 	"net/http"
 
-	"github.com/awahids/belajar-go/internal/middlewares"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 	"gorm.io/gorm"
@@ -29,13 +28,9 @@ func SetupRouters(db *gorm.DB) *gin.Engine {
 		}
 
 		AuthRouter(v1, db)
-
-		// v1.Use(middlewares.JWTAuthMiddleware())
-		v1.Use(middlewares.JWTAuth())
-		{
-			UserRouter(v1, validate, db)
-			BookRouter(v1, validate, db)
-		}
+		UserRouter(v1, validate, db)
+		BookRouter(v1, validate, db)
+		CompanyRouter(v1, validate, db)
 	}
 
 	return r

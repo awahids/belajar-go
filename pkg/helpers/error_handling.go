@@ -17,12 +17,6 @@ func ErrorPanic(err error) {
 	}
 }
 
-// func ErrorResponse(err error, ctx *gin.Context) {
-// 	ctx.JSON(http.StatusInternalServerError, gin.H{
-// 		"error": err.Error(),
-// 	})
-// }
-
 func ErrorValidator(err error) error {
 	if err != nil {
 		return fmt.Errorf("validation error: %v", err)
@@ -46,9 +40,9 @@ func ErrorResponse(err error, ctx *gin.Context) {
 	// duplicate key error
 	if strings.Contains(err.Error(), "duplicate key") {
 		webResponse := response.Response{
-			Code:   http.StatusBadRequest,
-			Status: "Bad Request",
-			Data:   "User already exists",
+			Code:    http.StatusBadRequest,
+			Message: "Bad Request",
+			Data:    "User already exists",
 		}
 		JSONResponse(ctx, webResponse)
 		return
@@ -59,15 +53,15 @@ func ErrorResponse(err error, ctx *gin.Context) {
 		var webResponse response.Response
 		if errors.Is(err, ErrRecordNotFound) {
 			webResponse = response.Response{
-				Code:   http.StatusNotFound,
-				Status: "Not Found",
-				Data:   "Data not found",
+				Code:    http.StatusNotFound,
+				Message: "Not Found",
+				Data:    "Data not found",
 			}
 		} else {
 			webResponse = response.Response{
-				Code:   http.StatusInternalServerError,
-				Status: "Internal Server Error",
-				Data:   ErrRecordNotFound.Error(),
+				Code:    http.StatusInternalServerError,
+				Message: "Internal Server Error",
+				Data:    ErrRecordNotFound.Error(),
 			}
 		}
 		JSONResponse(ctx, webResponse)

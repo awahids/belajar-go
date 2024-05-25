@@ -1,7 +1,7 @@
 package router
 
 import (
-	"github.com/awahids/belajar-go/internal/delivery/handlers"
+	"github.com/awahids/belajar-go/internal/delivery/http/handlers"
 	"github.com/awahids/belajar-go/internal/domain/repositories/book_repository"
 	"github.com/awahids/belajar-go/internal/domain/services/book_service"
 	"github.com/gin-gonic/gin"

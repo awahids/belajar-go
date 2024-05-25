@@ -3,12 +3,13 @@ package user_service
 import (
 	"errors"
 
-	"github.com/awahids/belajar-go/internal/delivery/data/request"
+	"github.com/awahids/belajar-go/internal/delivery/data/dtos"
 	"github.com/awahids/belajar-go/internal/delivery/data/response"
 	"github.com/awahids/belajar-go/internal/domain/models"
 	"github.com/awahids/belajar-go/internal/domain/repositories/role_repository"
 	"github.com/awahids/belajar-go/internal/domain/repositories/user_repository"
 	"github.com/awahids/belajar-go/pkg/helpers"
+	"github.com/awahids/belajar-go/pkg/utils"
 	"github.com/go-playground/validator/v10"
 )
 
@@ -26,13 +27,13 @@ func NewUserService(repo user_repository.UserInterface, roleRepo role_repository
 	}
 }
 
-func (s *UserService) CreateUser(userReq *request.CreateUserReq) (userRes *response.UserResponse, err error) {
+func (s *UserService) CreateUser(userReq *dtos.CreateUserReq) (userRes *response.UserResponse, err error) {
 	validator := s.Validate.Struct(userReq)
 	if validator != nil {
 		return nil, helpers.ErrorValidator(validator)
 	}
 
-	password, err := helpers.HashPassword(userReq.Password)
+	password, err := utils.HashPassword(userReq.Password)
 	helpers.ErrorPanic(err)
 
 	role, err := s.roleRepo.GetByUuid(userReq.Role.RoleUuid)
@@ -69,7 +70,7 @@ func (s *UserService) CreateUser(userReq *request.CreateUserReq) (userRes *respo
 	return userRes, nil
 }
 
-func (s *UserService) GetUserById(uuid string) (user response.UserResponse, err error) {
+func (s *UserService) GetUserById(uuid string) (userRes response.UserResponse, err error) {
 	userModel, err := s.repo.GetUser(uuid)
 	if err != nil {
 		if errors.Is(err, helpers.ErrRecordNotFound) {
@@ -78,7 +79,7 @@ func (s *UserService) GetUserById(uuid string) (user response.UserResponse, err 
 		return response.UserResponse{}, err
 	}
 
-	userRes := response.UserResponse{
+	userRes = response.UserResponse{
 		Id:       int(userModel.Id),
 		UUID:     userModel.UUID,
 		Username: userModel.Username,
@@ -118,7 +119,7 @@ func (s *UserService) GetAllUsers() (users []response.UserResponse, err error) {
 	return users, nil
 }
 
-func (s *UserService) UpdateUser(userReq request.UpdateUserReq) (userRes response.UserResponse, err error) {
+func (s *UserService) UpdateUser(userReq *dtos.UpdateUserReq) (userRes *response.UserResponse, err error) {
 	validator := s.Validate.Struct(userReq)
 	helpers.ErrorPanic(validator)
 
@@ -128,7 +129,7 @@ func (s *UserService) UpdateUser(userReq request.UpdateUserReq) (userRes respons
 		return userRes, err
 	}
 
-	userRes = response.UserResponse{
+	userRes = &response.UserResponse{
 		Id:       int(updatedUser.Id),
 		UUID:     updatedUser.UUID,
 		Username: updatedUser.Username,
