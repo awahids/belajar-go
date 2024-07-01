@@ -21,11 +21,10 @@ func NewBookService(bookInterface book_repository.BookInterface, validate *valid
 	}
 }
 
-func (s *BookService) GetAllBooks() ([]*response.BookResponse, error) {
+func (s *BookService) GetAllBooks() (books []*response.BookResponse, err error) {
 	result, err := s.repo.GetAll()
 	helpers.ErrorPanic(err)
 
-	var books []*response.BookResponse
 	for _, value := range result {
 		book := response.BookResponse{
 			Id:     int(value.Id),
